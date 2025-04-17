@@ -149,6 +149,14 @@
           <span class="site-state-item-name">포스트</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">카테고리</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">태그</span>
+      </div>
   </nav>
 </div>
   <div class="links-of-author animated">
@@ -211,8 +219,22 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">작성일</span>
+      
 
-      <time title="Post created: 2025-04-18 01:49:06" itemprop="dateCreated datePublished" datetime="2025-04-18T01:49:06+09:00">2025-04-18</time>
+      <time title="Post created: 2025-04-18 01:49:06 / Updated at: 02:11:32" itemprop="dateCreated datePublished" datetime="2025-04-18T01:49:06+09:00">2025-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LeetCode/std-container/" itemprop="url" rel="index"><span itemprop="name">std container</span></a>
+        </span>
     </span>
 
   
@@ -225,64 +247,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="요약"><a href="#요약" class="headerlink" title="요약"></a>요약</h1><blockquote>
-<p>발단 : rotate()를 구현하는 문제를 풀어봄. 문제를 풀며 궁금했던 점들을 알아보았음.</p>
-<ol>
-<li>평범한 접근으로 rotate를 구현하면 <strong>시간 O(n), 공간 O(n)</strong> 으로 구현할 수 있음. </li>
-<li>O(n)의 공간 복잡도는 LeetCode 통계상 저조한 효율성을 갖고 있어 이를 In-place[^3] 방식으로 구현해야함.</li>
-<li>이미 <code>std::rotate()</code>가 In-place로 구현되어 있었고 내부 작동에 대해 분석해봄. (어떤 종류의 알고리듬을 사용하는지, 실제 구현이 어떻게 되어있는지)</li>
-</ol>
-</blockquote>
-<h1 id="개인적-배경-목적"><a href="#개인적-배경-목적" class="headerlink" title="개인적 배경 &amp; 목적"></a>개인적 배경 &amp; 목적</h1><p>C++을 손에 익힐 겸 매일 LeetCode 1문제 정도는 풀고 있습니다. LeetCode내 <code>인터뷰 상위 150문제</code>에서 자주 고르는데 오늘은 <code>Array/String</code> 주제에서 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-array/">Rotate Array</a>가 끌려서 풀어봤습니다.</p>
-<p>해당 문제에 대해 설명을 하자면</p>
-<blockquote>
-<p><code>원본 배열 nums</code>와 <code>정수 k</code>가 주어질 때 nums 배열을 k번 <code>오른쪽 회전</code> 한 nums를 만들어라 </p>
-</blockquote>
-<p>입니다. 이해를 돕기 위해 아래 시각화된 그림을 넣겠습니다.<br><img src="/images/vector-rotation-svg.svg" alt="vector-rotation-svg.svg">문제 설명 예시 그림[^1]</p>
-<blockquote>
-<p>우선 글은 제가 <code>문제를 어떻게 풀었는지</code> 보단 <code>어떤 효율적인 방법이 있는지</code>에 집중되어 있습니다.</p>
-</blockquote>
-<p>어떤 의식의 흐름대로 진행되었는지 살펴봅시다.</p>
-<h1 id="스스로-생각한-과정들"><a href="#스스로-생각한-과정들" class="headerlink" title="스스로 생각한 과정들"></a>스스로 생각한 과정들</h1><h2 id="k의-값은-배열의-갯수내로-조정된다"><a href="#k의-값은-배열의-갯수내로-조정된다" class="headerlink" title="k의 값은 배열의 갯수내로 조정된다."></a>k의 값은 배열의 갯수내로 조정된다.</h2><p>k의 값의 범위는 $0 \leqq k \leqq 10^5$ 인데, nums 배열의 크기는 k보다 크거나 작을 수 있습니다. </p>
-<p>특정 상황에선  <em>n번 회전할 때 원래 상태로 돌아오는 상황</em>이 벌어집니다. 예를 들어 k가 10이고 배열의 갯수가 5이라면, 결과는 그대로 출력해야 하는 상황이라고 보시면 됩니다.</p>
-<blockquote>
-<p>고로 실질적인 회전 횟수를 구해줘야 하므로, <code>가상으로 n회전을 수행했다 치고 남은 나머지만큼 회전을 수행하도록 한다.</code>라는 아이디어가 필요합니다.</p>
-</blockquote>
-<p><em>추가로 n회전의 경우, 배열은 ‘그대로임’을 활용해 바로 반환합니다</em></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>구현된 코드 1</p>
-<h2 id="문법-실수"><a href="#문법-실수" class="headerlink" title="문법 실수"></a>문법 실수</h2><p>k값 조정 이후 어떻게 회전을 시킬까를 고민해봤습니다.<br>Python의 슬라이싱이 먼저 떠올라, 슬라이싱을 한 뒤 합치는 형식으로 진행해봤습니다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123; </span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">		<span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">slice</span>(nums.<span class="built_in">end</span>()-cnt, nums.<span class="built_in">end</span>()) + <span class="built_in">slice</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>()-cnt<span class="number">-1</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>해당 문법은 제대로 먹히지 않았고 <code>string과 같이 연산자 문법이 당연히 될 것</code>이라고 생각한 저의 실수였습니다.</p>
-<h2 id="구현-시간복잡도-O-n-공간복잡도-O-n"><a href="#구현-시간복잡도-O-n-공간복잡도-O-n" class="headerlink" title="구현 - 시간복잡도 O(n), 공간복잡도 O(n)"></a>구현 - 시간복잡도 O(n), 공간복잡도 O(n)</h2><p>결국 특정 기능을 쓰지 않고 직접 구현했습니다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n; </span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) <span class="keyword">return</span>; </span><br><span class="line">        </span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; temp = nums;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++) nums[i] = temp[n - k + i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - k; i++) nums[k + i] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>하지만 메모리 측면에서 효율적이지 않은 솔루션이라고 결과가 나왔습니다.<br><img src="/images/Pasted-image-20250417220236.png" alt="Pasted-image-20250417220236.png">LeetCode 분석 화면[^2]</p>
-<h1 id="rotate-함수-공간복잡도-O-1-로-구현"><a href="#rotate-함수-공간복잡도-O-1-로-구현" class="headerlink" title="rotate 함수 - 공간복잡도 O(1)로 구현"></a>rotate 함수 - 공간복잡도 O(1)로 구현</h1><h2 id="In-place-방식"><a href="#In-place-방식" class="headerlink" title="In-place 방식"></a>In-place 방식</h2><p>이전 방식은 <code>temp</code>라는 복사된 배열을 통해 <code>nums</code>의 회전을 완성시킵니다. 문제는 원본 배열만큼의 공간이 필요해 공간 복잡도 O(n)이 나온다는 점입니다. 고로 해당 방식을 수정해 O(1)으로 작동하게끔 구현해야합니다.</p>
-<blockquote>
-<p>일반적으로 공간복잡도 O(1)을 구현하기 위한 방식은 <strong>In-place[^3]방식</strong>이 있는 걸로 알고 있습니다.</p>
-</blockquote>
-<p>이를 위해 Claude에게 질문한 결과. 이미 C++엔 In-place로 구현된 함수가 있고 그것은 <code>std::rotate()</code>함수라고 알려줬습니다.</p>
-<h2 id="std-rotate-실제-구현-부분"><a href="#std-rotate-실제-구현-부분" class="headerlink" title="std::rotate() 실제 구현 부분"></a>std::rotate() 실제 구현 부분</h2><p>‘그냥 함수 쓰면 되는구나’ 보단 내부 동작이 어떻게 작동되는지 확인해 보고 싶었습니다.<br>그래서 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">cppreference</a>[^4]를 찾아보고, local에 깔린 <code>std::rotate()</code>함수를 확인해본 결과 아래의 방식을 사용하는 것으로 확인했습니다. (Microsoft STL)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">_EXPORT_STD <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_FwdIt</span>&gt;</span><br><span class="line"><span class="function">_CONSTEXPR20 _FwdIt <span class="title">rotate</span><span class="params">(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// exchange the ranges [_First, _Mid) and [_Mid, _Last)</span></span><br><span class="line">    <span class="comment">// that is, rotates [_First, _Last) left by distance(_First, _Mid) positions</span></span><br><span class="line">    <span class="comment">// returns the iterator pointing at *_First&#x27;s new home</span></span><br><span class="line"></span><br><span class="line">    _Adl_verify_range(_First, _Mid);</span><br><span class="line">    _Adl_verify_range(_Mid, _Last);</span><br><span class="line">    <span class="keyword">auto</span> _UFirst      = _Get_unwrapped(_First);</span><br><span class="line">    <span class="keyword">auto</span> _UMid        = _Get_unwrapped(_Mid);</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _ULast = _Get_unwrapped(_Last);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">        <span class="keyword">return</span> _Last;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (_UMid == _ULast) &#123;</span><br><span class="line">        <span class="keyword">return</span> _First;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 1. 삼중 역전법 - 임의 접근 반복자</span></span><br><span class="line">    <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(_Is_cpp17_random_iter_v&lt;_FwdIt&gt;)</span> </span>&#123;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _UMid)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _ULast)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UFirst + (_ULast - _UMid));</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// 2. 삼중 역전법(위에서 변형됨) - 양방향 반복자</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (_Is_cpp17_bidi_iter_v&lt;_FwdIt&gt;) &#123;</span><br><span class="line">        _STD <span class="built_in">reverse</span>(_UFirst, _UMid);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="keyword">auto</span> _Tmp = _Reverse_until_sentinel_unchecked(_UFirst, _UMid, _ULast);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_Tmp.first, _Tmp.second)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UMid != _Tmp.first ? _Tmp.first : _Tmp.second);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3. 순환 교체법</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">auto</span> _UNext = _UMid;</span><br><span class="line">        <span class="keyword">do</span> &#123; <span class="comment">// rotate the first cycle</span></span><br><span class="line">            <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">            ++_UFirst;</span><br><span class="line">            ++_UNext;</span><br><span class="line">            <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                _UMid = _UNext;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        _Seek_wrapped(_First, _UFirst);</span><br><span class="line">        <span class="keyword">while</span> (_UMid != _ULast) &#123; <span class="comment">// rotate subsequent cycles</span></span><br><span class="line">            _UNext = _UMid;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">                ++_UFirst;</span><br><span class="line">                ++_UNext;</span><br><span class="line">                <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                    _UMid = _UNext;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _First;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="std-rotate-의-핵심-분석"><a href="#std-rotate-의-핵심-분석" class="headerlink" title="std::rotate()의 핵심 분석"></a>std::rotate()의 핵심 분석</h2><p>간략하게 코드를 설명하자면 <strong><code>반복자</code>에 따라 방법을 다르게 적용하는 것</strong>입니다. 해당 내용은 <a href="/ko/C++%EB%B0%98%EB%B3%B5%EC%9E%90">C++반복자</a>를 참고부탁드립니다.</p>
-<blockquote>
-<p>크게 두가지 방법이며, 두 로직 모두 In-place 방식을 사용합니다.</p>
-<ol>
-<li>삼중 역전법</li>
-<li>순환 교체법</li>
-</ol>
-</blockquote>
-<p>아래 그림을 통해 두 알고리듬의 작동 방식을 보여드리겠습니다.<br><img src="/images/rotation-algorithms-fixed.svg" alt="rotation-algorithms-fixed.svg">삼중 역전법 &amp; 순환 교체법 작동 방식 그림[^5]</p>
-<p> <em>코드로 다시 돌아가서 확인해봤습니다. 첫 If문이 가장 많이 쓰인다는 뉘앙스로 본다면  <code>삼중 역전법</code>을 자주 사용한다는 점을 확인할 수 있습니다.</em></p>
-<h2 id="왜-삼중-역전법을-많이-쓰는가"><a href="#왜-삼중-역전법을-많이-쓰는가" class="headerlink" title="왜 삼중 역전법을 많이 쓰는가?"></a>왜 삼중 역전법을 많이 쓰는가?</h2><p>저도 단순히 해당 그림만 놓고 봤을 땐 <code>순환 교체법</code>이 <code>삼중 역전법</code>보다 빨라 보였습니다. 예시에서 순환 교체법의 경우는 swap을 7번을 수행하고 삼중 역전법은 3번의 뒤집기 과정에서 swap을 더 많이 수행한다고 보였습니다.</p>
-<p>하지만 그렇지 않았고 관련 그림으로 설명하겠습니다.<br><img src="/images/operation-comparison-with-inequality.svg" alt="operation-comparison-with-inequality.svg">각 알고리듬 연산 분석 그림[^6]</p>
-<blockquote>
-<p>실질적으로 순환 교체법이 <strong>재귀 함수 오버헤드 + 각종 검증 변수 &amp; 비교 연산</strong>이 더 필요해 연산이 더 많습니다.</p>
-</blockquote>
-<h1 id="마무리"><a href="#마무리" class="headerlink" title="마무리"></a>마무리</h1><p>간단히 사용하는 std함수들이 어떻게 구현되었는지 확인 해볼 수 있었음.<br>넋두리 : 알고리듬의 특성과 실질적 연산이 어떻게 작동되는지 확인해봐야. 효율적인 솔루션을 만들 수 있을 것 같음.</p>
-<h1 id="각주"><a href="#각주" class="headerlink" title="각주"></a>각주</h1><p>[^1]: 출처 : Claude 생성 SVG<br>[^2]: 출처 : LeetCode 캡처<br>[^3]: 개념 : 추가적인 메모리 할당이 없이 작업을 완성하는 것.<br>[^4]: 출처 : <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">https://en.cppreference.com/w/cpp/algorithm/rotate</a>, Possible implementation 문단 - 순환 교체법 사용<br>[^5]: 출처 : 각주1 참고[^1]<br>[^6]: 출처 : 각주1 참고[^1]</p>
-
+          배열을 한 칸씩 밀어내는 rotate()함수에 대한 분석입니다.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/#more" rel="contents">
+                더 읽어보기 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

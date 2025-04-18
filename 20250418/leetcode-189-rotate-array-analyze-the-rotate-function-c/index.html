@@ -19,21 +19,21 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"choongghee.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="A breakdown of the rotate function, which pushes an array by one space.">
+    <meta name="description" content="A breakdown of the rotate() function, which pushes an array in-place by k.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode 189. Rotate Array - Analyze the Rotate Function (C++)">
+<meta property="og:title" content="Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array">
 <meta property="og:url" content="https://choongghee.github.io/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/index.html">
 <meta property="og:site_name" content="ChoongGhee">
-<meta property="og:description" content="A breakdown of the rotate function, which pushes an array by one space.">
+<meta property="og:description" content="A breakdown of the rotate() function, which pushes an array in-place by k.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://choongghee.github.io/images/vector-rotation-svg.svg">
 <meta property="og:image" content="https://choongghee.github.io/images/Pasted-image-20250417220236.png">
 <meta property="og:image" content="https://choongghee.github.io/images/rotation-algorithms-fixed.svg">
 <meta property="og:image" content="https://choongghee.github.io/images/operation-comparison-with-inequality.svg">
 <meta property="article:published_time" content="2025-04-17T16:49:06.547Z">
-<meta property="article:modified_time" content="2025-04-17T17:11:37.886Z">
+<meta property="article:modified_time" content="2025-04-18T15:20:44.292Z">
 <meta property="article:author" content="ChoongGhee">
-<meta property="article:tag" content="c++">
+<meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="std container">
 <meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary">
@@ -43,10 +43,10 @@
 <link rel="canonical" href="https://choongghee.github.io/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://choongghee.github.io/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/","path":"20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/","title":"Leetcode 189. Rotate Array - Analyze the Rotate Function (C++)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://choongghee.github.io/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/","path":"20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/","title":"Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Leetcode 189. Rotate Array - Analyze the Rotate Function (C++) | ChoongGhee</title>
+<title>Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array | ChoongGhee</title>
   
 
 
@@ -61,9 +61,9 @@
 
   <div class="category-posts-list">
     <div class="category-header">
-      <span class="category-name">LeetCode</span>
-      <span class="posts-count">2개의 글</span>
-      <a href="/categories/LeetCode/" class="view-all">목록보기</a>
+      <span class="category-name">C/C++</span>
+      <span class="posts-count">4개의 글</span>
+      <a href="/categories/C-C/" class="view-all">목록보기</a>
     </div>
     
     <table class="posts-table">
@@ -77,14 +77,28 @@
         
           <tr >
             <td class="post-title">
-              <a href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/">LeetCode 189. Rotate Array - rotate 함수 분석 (C++)</a>
+              <a href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/">Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs</a>
             </td>
-            <td class="post-date">2025. 4. 18.</td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
           </tr>
         
           <tr class="current-post">
             <td class="post-title">
-              <a href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">Leetcode 189. Rotate Array - Analyze the Rotate Function (C++)</a>
+              <a href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/">rotate 함수 분석 (C++) - LeetCode 189. Rotate Array</a>
             </td>
             <td class="post-date">2025. 4. 18.</td>
           </tr>
@@ -182,7 +196,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">1.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Personal-Background-Purpose"><span class="nav-number">2.</span> <span class="nav-text">Personal Background &amp; Purpose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-thought-to-myself"><span class="nav-number">3.</span> <span class="nav-text">I thought to myself</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-value-of-k-is-adjusted-to-be-within-the-number-in-the-array"><span class="nav-number">3.1.</span> <span class="nav-text">The value of k is adjusted to be within the number in the array.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grammar-mistake"><span class="nav-number">3.2.</span> <span class="nav-text">Grammar mistake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-O-n-temporal-complexity-O-n-spatial-complexity"><span class="nav-number">3.3.</span> <span class="nav-text">Implementation - O(n) temporal complexity, O(n) spatial complexity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rotate-function-implemented-with-O-1-space-complexity"><span class="nav-number">4.</span> <span class="nav-text">rotate function - implemented with O(1) space complexity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#In-place-method"><span class="nav-number">4.1.</span> <span class="nav-text">In-place method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-rotate-actual-implementation-part"><span class="nav-number">4.2.</span> <span class="nav-text">std::rotate() actual implementation part</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Breaking-down-the-core-of-std-rotate"><span class="nav-number">4.3.</span> <span class="nav-text">Breaking down the core of std::rotate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-do-we-use-triple-inversion-so-much"><span class="nav-number">4.4.</span> <span class="nav-text">Why do we use triple inversion so much?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Footnotes"><span class="nav-number">6.</span> <span class="nav-text">Footnotes</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">1.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Personal-Background-amp-Purpose"><span class="nav-number">2.</span> <span class="nav-text">Personal Background &amp; Purpose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-thought-to-myself"><span class="nav-number">3.</span> <span class="nav-text">I thought to myself</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-value-of-k-is-adjusted-to-be-within-the-number-in-the-array"><span class="nav-number">3.1.</span> <span class="nav-text">The value of k is adjusted to be within the number in the array.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grammar-mistake"><span class="nav-number">3.2.</span> <span class="nav-text">Grammar mistake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-O-n-temporal-complexity-O-n-spatial-complexity"><span class="nav-number">3.3.</span> <span class="nav-text">Implementation - O(n) temporal complexity, O(n) spatial complexity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rotate-function-implemented-with-O-1-space-complexity"><span class="nav-number">4.</span> <span class="nav-text">rotate function - implemented with O(1) space complexity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#In-place-method"><span class="nav-number">4.1.</span> <span class="nav-text">In-place method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-rotate-actual-implementation-part"><span class="nav-number">4.2.</span> <span class="nav-text">std::rotate() actual implementation part</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Breaking-down-the-core-of-std-rotate"><span class="nav-number">4.3.</span> <span class="nav-text">Breaking down the core of std::rotate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-do-we-use-triple-inversion-so-much"><span class="nav-number">4.4.</span> <span class="nav-text">Why do we use triple inversion so much?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Footnotes"><span class="nav-number">6.</span> <span class="nav-text">Footnotes</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -195,7 +209,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,7 +250,21 @@
       <a class="popular-posts-link" href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/" rel="bookmark">
         <time class="popular-posts-time">2025-04-18</time>
         <br>
-      LeetCode 189. Rotate Array - rotate 함수 분석 (C++)
+      rotate 함수 분석 (C++) - LeetCode 189. Rotate Array
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs
       </a>
     </li>
   </ul>
@@ -272,12 +300,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Leetcode 189. Rotate Array - Analyze the Rotate Function (C++) | ChoongGhee">
+      <meta itemprop="name" content="Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array | ChoongGhee">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Leetcode 189. Rotate Array - Analyze the Rotate Function (C++)
+          Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array
         </h1>
 
         <div class="post-meta-container">
@@ -287,9 +315,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-04-18 01:49:06 / Modified: 02:11:37" itemprop="dateCreated datePublished" datetime="2025-04-18T01:49:06+09:00">2025-04-18</time>
+      <time title="Created: 2025-04-18 01:49:06" itemprop="dateCreated datePublished" datetime="2025-04-18T01:49:06+09:00">2025-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-04-19 00:20:44" itemprop="dateModified" datetime="2025-04-19T00:20:44+09:00">2025-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,11 +331,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/LeetCode/std-container/" itemprop="url" rel="index"><span itemprop="name">std container</span></a>
+          <a href="/categories/C-C/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
         </span>
     </span>
 
@@ -318,16 +352,15 @@
 <p>Rationale: Solved a problem implementing rotate(). while solving the problem, I realized that.</p>
 <ol>
 <li>The usual approach to implementing rotate is <strong>O(n) in time, O(n) in space</strong>.</li>
-<li>O(n) space complexity is not efficient according to LeetCode statistics, so we need to implement it in-place[^3].</li>
-<li><code>std::rotate()</code> was already implemented in-place and analyzed its inner workings. (What kind of algorithms are used, what is the actual implementation)</li>
+<li>O(n) space complexity is not efficient according to LeetCode statistics, so we need to implement it in-place<sup><a href="#fn_3" id="reffn_3">3</a></sup>.</li>
+<li><code>std::rotate()</code> was already implemented in-place and analyzed its inner workings. (What kind of algorithms are used, what is the actual implementation)<h1 id="Personal-Background-amp-Purpose"><a href="#Personal-Background-amp-Purpose" class="headerlink" title="Personal Background &amp; Purpose"></a>Personal Background &amp; Purpose</h1>I am solving about 1 LeetCode problem every day to learn C++. I often choose from <code>인터뷰 상위 150문제</code> in LeetCode, but today I was attracted to <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-array/">Rotate Array</a> in the topic <code>Array/String</code> and solved it.</li>
 </ol>
 </blockquote>
-<h1 id="Personal-Background-Purpose"><a href="#Personal-Background-Purpose" class="headerlink" title="Personal Background &amp; Purpose"></a>Personal Background &amp; Purpose</h1><p>I am solving about 1 LeetCode problem every day to learn C++. I often choose from <code>인터뷰 상위 150문제</code> in LeetCode, but today I was attracted to <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-array/">Rotate Array</a> in the topic <code>Array/String</code> and solved it.</p>
 <p>to explain the issue</p>
 <blockquote>
 <p>Given <code>원본 배열 nums</code> and <code>정수 k</code>, create a nums array with nums <code>오른쪽 회전</code> k times</p>
 </blockquote>
-<p>to help you understand, here’s a visualization to illustrate.<br><img src="/images/vector-rotation-svg.svg" alt="vector-rotation-svg.svg">Example illustration of the problem[^1]</p>
+<p>to help you understand, here’s a visualization to illustrate.<br><img src="/images/vector-rotation-svg.svg" alt="vector-rotation-svg.svg">Example illustration of the problem<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
 <blockquote>
 <p>First of all, the post is focused on <code>어떤 효율적인 방법이 있는지</code> rather than my <code>문제를 어떻게 풀었는지</code>.</p>
 </blockquote>
@@ -337,44 +370,53 @@
 <blockquote>
 <p>We need to get a realistic number of rotations, hence the idea of <code>가상으로 n회전을 수행했다 치고 남은 나머지만큼 회전을 수행하도록 한다.</code>.</p>
 </blockquote>
-<p><em>additionally, for n rotations, the array will return directly using ‘as is’</em> *</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>implemented code 1</p>
-<h2 id="Grammar-mistake"><a href="#Grammar-mistake" class="headerlink" title="Grammar mistake"></a>Grammar mistake</h2><p>after adjusting the k-value, I thought about how to rotate it.<br>Slicing in Python came to mind first, so I tried slicing and then merging.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123; </span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">		<span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">slice</span>(nums.<span class="built_in">end</span>()-cnt, nums.<span class="built_in">end</span>()) + <span class="built_in">slice</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>()-cnt<span class="number">-1</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>that syntax didn’t work and it was a mistake on my part to think it was <code>string과 같이 연산자 문법이 당연히 될 것</code>.</p>
-<h2 id="Implementation-O-n-temporal-complexity-O-n-spatial-complexity"><a href="#Implementation-O-n-temporal-complexity-O-n-spatial-complexity" class="headerlink" title="Implementation - O(n) temporal complexity, O(n) spatial complexity"></a>Implementation - O(n) temporal complexity, O(n) spatial complexity</h2><p>i ended up not using the specific function and implemented it myself.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n; </span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) <span class="keyword">return</span>; </span><br><span class="line">        </span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; temp = nums;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++) nums[i] = temp[n - k + i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - k; i++) nums[k + i] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>however, it turned out to be an inefficient solution in terms of memory.<br><img src="/images/Pasted-image-20250417220236.png" alt="Pasted-image-20250417220236.png">LeetCode analysis screen[^2]</p>
+<p><em>additionally, for n rotations, the array will return directly using ‘as is’</em> *<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>implemented code 1</p>
+<h2 id="Grammar-mistake"><a href="#Grammar-mistake" class="headerlink" title="Grammar mistake"></a>Grammar mistake</h2><p>after adjusting the k-value, I thought about how to rotate it.<br>Slicing in Python came to mind first, so I tried slicing and then merging.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123; </span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">		<span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">slice</span>(nums.<span class="built_in">end</span>()-cnt, nums.<span class="built_in">end</span>()) + <span class="built_in">slice</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>()-cnt<span class="number">-1</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>that syntax didn’t work and it was a mistake on my part to think it was <code>string과 같이 연산자 문법이 당연히 될 것</code>.</p>
+<h2 id="Implementation-O-n-temporal-complexity-O-n-spatial-complexity"><a href="#Implementation-O-n-temporal-complexity-O-n-spatial-complexity" class="headerlink" title="Implementation - O(n) temporal complexity, O(n) spatial complexity"></a>Implementation - O(n) temporal complexity, O(n) spatial complexity</h2><p>i ended up not using the specific function and implemented it myself.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        k = k % n; </span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) <span class="keyword">return</span>; </span><br><span class="line">        </span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; temp = nums;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++) nums[i] = temp[n - k + i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - k; i++) nums[k + i] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>however, it turned out to be an inefficient solution in terms of memory.<br><img src="/images/Pasted-image-20250417220236.png" alt="Pasted-image-20250417220236.png">LeetCode analysis screen<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
 <h1 id="rotate-function-implemented-with-O-1-space-complexity"><a href="#rotate-function-implemented-with-O-1-space-complexity" class="headerlink" title="rotate function - implemented with O(1) space complexity"></a>rotate function - implemented with O(1) space complexity</h1><h2 id="In-place-method"><a href="#In-place-method" class="headerlink" title="In-place method"></a>In-place method</h2><p>the previous method completes the rotation of <code>nums</code> with a copied array called <code>temp</code>. the problem is that it takes as much space as the original array, resulting in a space complexity of O(n). we need to modify the method so that it works in O(1).</p>
 <blockquote>
 <blockquote>
-<p>In general, I know there is an <strong>in-place[^3] method</strong> for implementing a space complexity of O(1).</p>
+<p>In general, I know there is an <strong>in-place<sup><a href="#fn_3" id="reffn_3">3</a></sup> method</strong> for implementing a space complexity of O(1).</p>
 </blockquote>
 </blockquote>
 <p>to this end, I asked Claude. he told me that there is already an in-place implementation in C++ and it is the function <code>std::rotate()</code>.</p>
-<h2 id="std-rotate-actual-implementation-part"><a href="#std-rotate-actual-implementation-part" class="headerlink" title="std::rotate() actual implementation part"></a>std::rotate() actual implementation part</h2><p>rather than “just write a function”, I wanted to see how the internal behavior works.<br>so I looked up <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">cppreference</a>[^4], checked the localized <code>std::rotate()</code> function, and found that it uses the following: (Microsoft STL)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">_EXPORT_STD <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_FwdIt</span>&gt;</span><br><span class="line"><span class="function">_CONSTEXPR20 _FwdIt <span class="title">rotate</span><span class="params">(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// exchange the ranges [_First, _Mid) and [_Mid, _Last)</span></span><br><span class="line">    <span class="comment">// that is, rotates [_First, _Last) left by distance(_First, _Mid) positions</span></span><br><span class="line">    <span class="comment">// returns the iterator pointing at *_First&#x27;s new home</span></span><br><span class="line"></span><br><span class="line">    _Adl_verify_range(_First, _Mid);</span><br><span class="line">    _Adl_verify_range(_Mid, _Last);</span><br><span class="line">    <span class="keyword">auto</span> _UFirst      = _Get_unwrapped(_First);</span><br><span class="line">    <span class="keyword">auto</span> _UMid        = _Get_unwrapped(_Mid);</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _ULast = _Get_unwrapped(_Last);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">        <span class="keyword">return</span> _Last;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (_UMid == _ULast) &#123;</span><br><span class="line">        <span class="keyword">return</span> _First;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 1. 삼중 역전법 - 임의 접근 반복자</span></span><br><span class="line">    <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(_Is_cpp17_random_iter_v&lt;_FwdIt&gt;)</span> </span>&#123;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _UMid)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _ULast)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UFirst + (_ULast - _UMid));</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// 2. 삼중 역전법(위에서 변형됨) - 양방향 반복자</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (_Is_cpp17_bidi_iter_v&lt;_FwdIt&gt;) &#123;</span><br><span class="line">        _STD <span class="built_in">reverse</span>(_UFirst, _UMid);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="keyword">auto</span> _Tmp = _Reverse_until_sentinel_unchecked(_UFirst, _UMid, _ULast);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_Tmp.first, _Tmp.second)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UMid != _Tmp.first ? _Tmp.first : _Tmp.second);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3. 순환 교체법</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">auto</span> _UNext = _UMid;</span><br><span class="line">        <span class="keyword">do</span> &#123; <span class="comment">// rotate the first cycle</span></span><br><span class="line">            <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">            ++_UFirst;</span><br><span class="line">            ++_UNext;</span><br><span class="line">            <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                _UMid = _UNext;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        _Seek_wrapped(_First, _UFirst);</span><br><span class="line">        <span class="keyword">while</span> (_UMid != _ULast) &#123; <span class="comment">// rotate subsequent cycles</span></span><br><span class="line">            _UNext = _UMid;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">                ++_UFirst;</span><br><span class="line">                ++_UNext;</span><br><span class="line">                <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                    _UMid = _UNext;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _First;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="std-rotate-actual-implementation-part"><a href="#std-rotate-actual-implementation-part" class="headerlink" title="std::rotate() actual implementation part"></a>std::rotate() actual implementation part</h2><p>rather than “just write a function”, I wanted to see how the internal behavior works.<br>so I looked up <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">cppreference</a><sup><a href="#fn_4" id="reffn_4">4</a></sup>, checked the localized <code>std::rotate()</code> function, and found that it uses the following: (Microsoft STL)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">_EXPORT_STD <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_FwdIt</span>&gt;</span><br><span class="line"><span class="function">_CONSTEXPR20 _FwdIt <span class="title">rotate</span><span class="params">(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// exchange the ranges [_First, _Mid) and [_Mid, _Last)</span></span><br><span class="line">    <span class="comment">// that is, rotates [_First, _Last) left by distance(_First, _Mid) positions</span></span><br><span class="line">    <span class="comment">// returns the iterator pointing at *_First&#x27;s new home</span></span><br><span class="line"></span><br><span class="line">    _Adl_verify_range(_First, _Mid);</span><br><span class="line">    _Adl_verify_range(_Mid, _Last);</span><br><span class="line">    <span class="keyword">auto</span> _UFirst      = _Get_unwrapped(_First);</span><br><span class="line">    <span class="keyword">auto</span> _UMid        = _Get_unwrapped(_Mid);</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _ULast = _Get_unwrapped(_Last);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">        <span class="keyword">return</span> _Last;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (_UMid == _ULast) &#123;</span><br><span class="line">        <span class="keyword">return</span> _First;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 1. 삼중 역전법 - 임의 접근 반복자</span></span><br><span class="line">    <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(_Is_cpp17_random_iter_v&lt;_FwdIt&gt;)</span> </span>&#123;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _UMid)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UFirst, _ULast)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UFirst + (_ULast - _UMid));</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// 2. 삼중 역전법(위에서 변형됨) - 양방향 반복자</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (_Is_cpp17_bidi_iter_v&lt;_FwdIt&gt;) &#123;</span><br><span class="line">        _STD <span class="built_in">reverse</span>(_UFirst, _UMid);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_UMid, _ULast)</span></span>;</span><br><span class="line">        <span class="keyword">auto</span> _Tmp = _Reverse_until_sentinel_unchecked(_UFirst, _UMid, _ULast);</span><br><span class="line">        <span class="function">_STD <span class="title">reverse</span><span class="params">(_Tmp.first, _Tmp.second)</span></span>;</span><br><span class="line">        _Seek_wrapped(_First, _UMid != _Tmp.first ? _Tmp.first : _Tmp.second);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3. 순환 교체법</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">auto</span> _UNext = _UMid;</span><br><span class="line">        <span class="keyword">do</span> &#123; <span class="comment">// rotate the first cycle</span></span><br><span class="line">            <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">            ++_UFirst;</span><br><span class="line">            ++_UNext;</span><br><span class="line">            <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                _UMid = _UNext;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        _Seek_wrapped(_First, _UFirst);</span><br><span class="line">        <span class="keyword">while</span> (_UMid != _ULast) &#123; <span class="comment">// rotate subsequent cycles</span></span><br><span class="line">            _UNext = _UMid;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="built_in">swap</span>(*_UFirst, *_UNext); <span class="comment">// intentional ADL</span></span><br><span class="line">                ++_UFirst;</span><br><span class="line">                ++_UNext;</span><br><span class="line">                <span class="keyword">if</span> (_UFirst == _UMid) &#123;</span><br><span class="line">                    _UMid = _UNext;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> (_UNext != _ULast);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _First;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="Breaking-down-the-core-of-std-rotate"><a href="#Breaking-down-the-core-of-std-rotate" class="headerlink" title="Breaking down the core of std::rotate()"></a>Breaking down the core of std::rotate()</h2><p>in a nutshell, the code is simply applying the method differently according to **<code>반복자</code>. please refer to <a href="/en/C++-Iterators">C++ Iterators</a> for more details.</p>
 <blockquote>
 <blockquote>
 <p>There are two main methods, both logic uses the in-place method.</p>
-</blockquote>
 <ol>
 <li>triple inversion</li>
 <li>cyclic replacement</li>
 </ol>
 </blockquote>
-<p>the figure below shows how both algorithms work.<br><img src="/images/rotation-algorithms-fixed.svg" alt="rotation-algorithms-fixed.svg">Illustration of how triple inversion &amp; cyclic replacement work[^5]</p>
+</blockquote>
+<p>the figure below shows how both algorithms work.<br><img src="/images/rotation-algorithms-fixed.svg" alt="rotation-algorithms-fixed.svg">Illustration of how triple inversion &amp; cyclic replacement work<sup><a href="#fn_5" id="reffn_5">5</a></sup></p>
 <p> <em>going back to the code, we can see that <code>삼중 역전법</code> is used most often, based on the nuance that the first If statement is the most common.</em></p>
 <h2 id="Why-do-we-use-triple-inversion-so-much"><a href="#Why-do-we-use-triple-inversion-so-much" class="headerlink" title="Why do we use triple inversion so much?"></a>Why do we use triple inversion so much?</h2><p>to me, <code>순환 교체법</code> looks faster than <code>삼중 역전법</code> simply by looking at the figure. In the example, the cyclic replacement method performs 7 swaps and the triple inversion method performs more swaps in the course of 3 flips.</p>
-<p>however, this was not the case, and I’ll explain with a related figure.<br><img src="/images/operation-comparison-with-inequality.svg" alt="operation-comparison-with-inequality.svg">Illustration of the breakdown of each algorithm’s operation[^6]</p>
+<p>however, this was not the case, and I’ll explain with a related figure.<br><img src="/images/operation-comparison-with-inequality.svg" alt="operation-comparison-with-inequality.svg">Illustration of the breakdown of each algorithm’s operation<sup><a href="#fn_6" id="reffn_6">6</a></sup></p>
 <blockquote>
 <p>In effect, the cyclic swap method has more operations because it requires <strong>recursive function overhead + various validation variables &amp; comparison operations</strong>.</p>
 </blockquote>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>we were able to see how simple std functions are implemented.<br>i need to check the nature of the algorithm and how the actual operations work. I think I can create an efficient solution.</p>
-<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1><p>[^1]: Source: SVG created by Claude<br>[^2]: Source: LeetCode capture<br>[^3]: concept : completing a task without additional memory allocation.<br>[^4]: Source: <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">https://en.cppreference.com/w/cpp/algorithm/rotate</a>, Possible implementation paragraph - using recursive replacement<br>[^5]: Source: see footnote 1[^1]<br>[^6]: Source: see footnote 1[^1]</p>
+<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1><blockquote id="fn_1">
+<sup>1</sup>. Source: SVG created by Claude<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2">
+<sup>2</sup>. Source: LeetCode capture<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_3">
+<sup>3</sup>. concept : completing a task without additional memory allocation.<a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_4">
+<sup>4</sup>. Source: <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/rotate">https://en.cppreference.com/w/cpp/algorithm/rotate</a>, Possible implementation paragraph - using recursive replacement<a href="#reffn_4" title="Jump back to footnote [4] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_5">
+<sup>5</sup>. Source: see footnote 1<sup><a href="#fn_1" id="reffn_1">1</a></sup><a href="#reffn_5" title="Jump back to footnote [5] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_6">
+<sup>6</sup>. Source: see footnote 1<sup><a href="#fn_1" id="reffn_1">1</a></sup><a href="#reffn_6" title="Jump back to footnote [6] in the text."> &#8617;</a>
+</blockquote>
 
     </div>
 
@@ -384,7 +426,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
               <a href="/tags/std-container/" rel="tag"># std container</a>
               <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
           </div>
@@ -476,6 +518,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

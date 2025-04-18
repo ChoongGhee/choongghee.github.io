@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"choongghee.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="배열을 생성할 때, heap 메모리를 사용하는 동적할당과 stack 메모리를 사용하는 지연 변수 간 실질적 메모리 이용량 비교">
+<meta property="og:type" content="article">
+<meta property="og:title" content="같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs">
+<meta property="og:url" content="https://choongghee.github.io/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/index.html">
+<meta property="og:site_name" content="ChoongGhee">
+<meta property="og:description" content="배열을 생성할 때, heap 메모리를 사용하는 동적할당과 stack 메모리를 사용하는 지연 변수 간 실질적 메모리 이용량 비교">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://choongghee.github.io/images/memory-comparison.svg">
+<meta property="article:published_time" content="2025-04-18T15:57:06.164Z">
+<meta property="article:modified_time" content="2025-04-18T15:59:26.626Z">
+<meta property="article:author" content="ChoongGhee">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://choongghee.github.io/images/memory-comparison.svg">
+
+
+<link rel="canonical" href="https://choongghee.github.io/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ko","comments":true,"permalink":"https://choongghee.github.io/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/","path":"20250419/같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs/","title":"같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs | ChoongGhee</title>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  <div class="category-posts-list">
+    <div class="category-header">
+      <span class="category-name">C/C++</span>
+      <span class="posts-count">4개의 글</span>
+      <a href="/categories/C-C/" class="view-all">목록보기</a>
+    </div>
+    
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th class="post-title">글 제목</th>
+          <th class="post-date">작성일</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/">Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr class="current-post">
+            <td class="post-title">
+              <a href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/">rotate 함수 분석 (C++) - LeetCode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ChoongGhee</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="검색" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>홈</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>정보</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>카테고리</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>아카이브</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>검색
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          목차
+        </li>
+        <li class="sidebar-nav-overview">
+          흝어보기
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%9A%94%EC%95%BD"><span class="nav-number">1.</span> <span class="nav-text">요약</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%B0%B0%EA%B2%BD"><span class="nav-number">2.</span> <span class="nav-text">배경</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%99%9C-%EC%A7%80%EC%97%AD-%EB%B3%80%EC%88%98%EA%B0%80-%EB%8D%94-%EC%A0%81%EC%9D%80-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC-%EC%93%B0%EB%8A%94%EA%B0%80"><span class="nav-number">3.</span> <span class="nav-text">왜 지역 변수가 더 적은 메모리를 쓰는가?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%A7%88%EB%AC%B4%EB%A6%AC"><span class="nav-number">4.</span> <span class="nav-text">마무리</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B0%81%EC%A3%BC"><span class="nav-number">5.</span> <span class="nav-text">각주</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ChoongGhee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">포스트</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">카테고리</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">태그</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/choongghee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;choongghee" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tititito44@gmail.com" title="E-Mail → mailto:tititito44@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-bookmark fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-18</time>
+        <br>
+      rotate 함수 분석 (C++) - LeetCode 189. Rotate Array
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-18</time>
+        <br>
+      Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ko">
+    <link itemprop="mainEntityOfPage" href="https://choongghee.github.io/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ChoongGhee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs | ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">작성일</span>
+      
+
+      <time title="Post created: 2025-04-19 00:57:06 / Updated at: 00:59:26" itemprop="dateCreated datePublished" datetime="2025-04-19T00:57:06+09:00">2025-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="요약"><a href="#요약" class="headerlink" title="요약"></a>요약</h1><blockquote>
+<p>LeetCode 메모리 분석 결과, 동적할당이 지역 변수보다 메모리를 더 쓴다는 점을 알게 됨.<br>결론 : 동적할당은 <strong>메모리 관리를 도와주는 할당기를 사용하는 것</strong>임. 고로 관리를 위한 <em>1. 오버헤드, 2. 정렬을 위한 패딩, 3. 발생된 단편화</em>등등 많은 요인들이 메모리 용량을 늘리는 것임.</p>
+</blockquote>
+<h1 id="배경"><a href="#배경" class="headerlink" title="배경"></a>배경</h1><p>4월 10일 경 풀었던 <a href="/ko/동적-프로그래밍-Dynamic-Programming">동적 프로그래밍 Dynamic Programming</a>문제 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/climbing-stairs/">Climbing Sairs</a>에서 저는 아래와 같이 <code>동적할당</code>을 통해 <code>캐시 변수</code>를 생성했습니다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">climbStairs</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span>* dp = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">2</span>];</span><br><span class="line">            dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">            dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">char</span> i =<span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">                <span class="type">int</span> temp = dp[<span class="number">0</span>] + dp[<span class="number">1</span>];</span><br><span class="line">                dp[<span class="number">0</span>] = dp[<span class="number">1</span>];</span><br><span class="line">                dp[<span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> dp[<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>지금 보면서 느끼는 것은 <code>왜 굳이 동적할당을 했는가?</code>라는 의문이 듭니다. 아마도 신중하지 않게 <code>변수를 선언해야하겠구나</code>라고 바로 동적할당을 떠올렸나봅니다.</p>
+<p>각설하고 여느때 처럼 시간, 공간 분석에서 100%에 가깝지 않으면 호기심이 생겼습니다. 그래서 더 효율적인 방안을 Claude에게 질문했고 아래처럼 지역 변수, 즉 스택 메모리에 할당하여 사용하는 코드가 나왔습니다.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">climbStairs</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> prev = <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> curr = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">                <span class="type">int</span> temp = prev + curr;</span><br><span class="line">                prev = curr;</span><br><span class="line">                curr = temp;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> curr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></p>
+<h1 id="왜-지역-변수가-더-적은-메모리를-쓰는가"><a href="#왜-지역-변수가-더-적은-메모리를-쓰는가" class="headerlink" title="왜 지역 변수가 더 적은 메모리를 쓰는가?"></a>왜 지역 변수가 더 적은 메모리를 쓰는가?</h1><blockquote>
+<p>저는 소제목처럼, 스택 메모리에 저장되는 지역 변수가 왜 더 적게 쓰는지 의문이였습니다. 아래 두가지 이유로 말이죠.</p>
+<ol>
+<li>확실친 않지만 <strong>지역 변수는 메모리 해제라는 것을 하지 않는다.</strong> (코드 상으로 봐도)</li>
+<li>코드는 해제하지 않은 실수를 했지만 동적할당의 경우 해제를 할 경우 prev, curr 만큼의 메모리가 더 적게 쓰일 것이다.</li>
+</ol>
+</blockquote>
+<p>이에 대해 질문을 하니 제 접근은 맞지만 제가 놓친게 있다고 했습니다. 아래의 설명이 압축된 그림으로 설명하겠습니다.<br><img src="/images/memory-comparison.svg" alt="memory-comparison.svg">각 방식 비교 그림<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="마무리"></a>마무리</h1><blockquote>
+<p>결론 : 요약에 말했다 싶이, <strong>동적할당기에 필요로되는 메모리를 간과함.</strong></p>
+<ul>
+<li>C/C++의 외부 함수를 쓸 때 메모리가 추가로 들어간다는 점을 다시금 상기함.</li>
+</ul>
+</blockquote>
+<h1 id="각주"><a href="#각주" class="headerlink" title="각주"></a>각주</h1><blockquote id="fn_1">
+<sup>1</sup>. 출처 : Claude 생성 SVG<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>한국어</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="" aria-label="Select language">
+      
+        <option value="ko" data-href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/" selected="">
+          한국어
+        </option>
+      
+        <option value="en" data-href="/en/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ChoongGhee</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

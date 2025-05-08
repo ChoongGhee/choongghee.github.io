@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"choongghee.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="LeetCode problem solving course (Prefix Sum algorithm)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reserve() Vs Resize() in Vector Class (C++)">
+<meta property="og:url" content="https://choongghee.github.io/20250508/reserve-vs-resize-in-vector-class-c/index.html">
+<meta property="og:site_name" content="ChoongGhee">
+<meta property="og:description" content="LeetCode problem solving course (Prefix Sum algorithm)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://choongghee.github.io/images/vector-memory-svg-reorganized.svg">
+<meta property="article:published_time" content="2025-05-08T12:51:30.139Z">
+<meta property="article:modified_time" content="2025-05-08T12:55:35.110Z">
+<meta property="article:author" content="ChoongGhee">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="std">
+<meta property="article:tag" content="vector">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://choongghee.github.io/images/vector-memory-svg-reorganized.svg">
+
+
+<link rel="canonical" href="https://choongghee.github.io/20250508/reserve-vs-resize-in-vector-class-c/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://choongghee.github.io/20250508/reserve-vs-resize-in-vector-class-c/","path":"20250508/reserve-vs-resize-in-vector-class-c/","title":"Reserve() Vs Resize() in Vector Class (C++)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Reserve() Vs Resize() in Vector Class (C++) | ChoongGhee</title>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  <div class="category-posts-list">
+    <div class="category-header">
+      <span class="category-name">C/C++</span>
+      <span class="posts-count">6개의 글</span>
+      <a href="/categories/C-C/" class="view-all">목록보기</a>
+    </div>
+    
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th class="post-title">글 제목</th>
+          <th class="post-date">작성일</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr class="current-post">
+            <td class="post-title">
+              <a href="/20250508/reserve-vs-resize-in-vector-class-c/">Reserve() Vs Resize() in Vector Class (C++)</a>
+            </td>
+            <td class="post-date">2025. 5. 08.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/">vector class의 reserve() vs resize() (C++)</a>
+            </td>
+            <td class="post-date">2025. 5. 08.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/">Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/">rotate 함수 분석 (C++) - LeetCode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ChoongGhee</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Oops"><span class="nav-number">1.1.</span> <span class="nav-text">Oops</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reserve-vs-resize"><span class="nav-number">2.</span> <span class="nav-text">reserve() vs resize()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary-of-VECTOR%E2%80%99s-array-management-structure"><span class="nav-number">2.1.</span> <span class="nav-text">Summary of VECTOR’s array management structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Is-this-actually-the-case"><span class="nav-number">2.2.</span> <span class="nav-text">Is this actually the case?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Basic-declaration-of-vector-class"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. Basic declaration of vector class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Vector-val-structure-variable-type-of-Scary-val"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. _Vector_val structure (variable type of _Scary_val)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Implementing-the-main-functions"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. Implementing the main functions</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Footnotes"><span class="nav-number">3.</span> <span class="nav-text">Footnotes</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ChoongGhee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/choongghee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;choongghee" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tititito44@gmail.com" title="E-Mail → mailto:tititito44@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-bookmark fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/" rel="bookmark">
+        <time class="popular-posts-time">2025-05-08</time>
+        <br>
+      vector class의 reserve() vs resize() (C++)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250424/leetcode-2145-count-the-hidden-sequences-solved-cumulative-sum-algorithm/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-24</time>
+        <br>
+      Leetcode 2145. Count the Hidden Sequences Solved - Prefix Sum Algorithm
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250424/LeetCode%202145.%20Count%20The%20Hidden%20Sequences%20%ED%92%80%EC%9D%B4%20-%20%EB%88%84%EC%A0%81%ED%95%A9%20%EC%95%8C%EA%B3%A0%EB%A6%AC/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-24</time>
+        <br>
+      LeetCode 2145. Count The Hidden Sequences 풀이 - 누적합 알고리듬
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://choongghee.github.io/20250508/reserve-vs-resize-in-vector-class-c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ChoongGhee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Reserve() Vs Resize() in Vector Class (C++) | ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Reserve() Vs Resize() in Vector Class (C++)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-05-08 21:51:30 / Modified: 21:55:35" itemprop="dateCreated datePublished" datetime="2025-05-08T21:51:30+09:00">2025-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>in this LeetCode problem (<a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-the-hidden-sequences/">LeetCode_2145</a>), we wanted to create a one-dimensional vector array (called arr) that fits the size of the given array <code>differences</code>.<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
+<h2 id="Oops"><a href="#Oops" class="headerlink" title="Oops"></a>Oops</h2><p>since the length of the vector arr is **given<code>differences</code>, we wanted to declare the expected memory space first, i.e., use the <code>reserve()</code> member function to free up memory space.</p>
+<p>however, when I ran LeetCode, I got the following error.</p>
+<h1 id="reserve-vs-resize"><a href="#reserve-vs-resize" class="headerlink" title="reserve() vs resize()"></a>reserve() vs resize()</h1><blockquote>
+<p>What I overlooked was that “there is a difference between capacity and size of a vector”.</p>
+<blockquote>
+<p>To break it down, capacity is the <em>maximum</em> size that the data structure can hold<br>size is the current number of elements in that <em>structure</em>.</p>
+</blockquote>
+</blockquote>
+<p> rather than writing, I’ll illustrate these two concepts with the figure below.</p>
+<h2 id="Summary-of-VECTOR’s-array-management-structure"><a href="#Summary-of-VECTOR’s-array-management-structure" class="headerlink" title="Summary of VECTOR’s array management structure"></a>Summary of VECTOR’s array management structure</h2><p>at its core, VECTOR’s internal array management consists of the interaction of three pointers.</p>
+<blockquote>
+<p>the base of the array: first<br>the last of the currently allocated elements: last<br>the end of the data structure memory : end</p>
+</blockquote>
+<p><img src="/images/vector-memory-svg-reorganized.svg" alt="vector-memory-svg-reorganized.svg">std::vectorInternal Array Management Structure<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
+<blockquote>
+<p>To summarize, resize() is a function that causes the <strong>_Mylast pointer</strong> to be incremented, and reserve() is a function that causes the <strong>_Myend pointer</strong> to be incremented.</p>
+<p><em>last should have an address less than end, and we’ll adjust if other circumstances arise</em></p>
+<h2 id="Is-this-actually-the-case"><a href="#Is-this-actually-the-case" class="headerlink" title="Is this actually the case?"></a>Is this actually the case?</h2><blockquote>
+<p>This part is to verify that the above abstracted summary is implemented (the process of finding the proof)</p>
+<p>Below is an excerpt of code from the Microsoft Visual C++ (MSVC) compiler’s implementation of the C++17/C++20 standard library, which demonstrates the vector implementation of the Standard Template Library (STL) used in Visual Studio 2019 and later versions.</p>
+</blockquote>
+<p>Also, at my current level of understanding of C++’s “template metaprogramming”, the linking of related type variables is not well explained. it would be good to discuss ‘template metaprogramming’ in the future.</p>
+</blockquote>
+<h3 id="1-Basic-declaration-of-vector-class"><a href="#1-Basic-declaration-of-vector-class" class="headerlink" title="1. Basic declaration of vector class"></a>1. Basic declaration of vector class</h3><p>first, here is the basic declaration of the <code>std::vector</code> class:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">_EXPORT_STD <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Ty</span>, <span class="keyword">class</span> <span class="title class_">_Alloc</span> = allocator&lt;_Ty&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> vector &#123; <span class="comment">// varying size array of values</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> _Vb_val;</span><br><span class="line">    <span class="keyword">friend</span> _Tidy_guard&lt;vector&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">using</span> _Alty        = _Rebind_alloc_t&lt;_Alloc, _Ty&gt;;</span><br><span class="line">    <span class="keyword">using</span> _Alty_traits = allocator_traits&lt;_Alty&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">static_assert</span>(!_ENFORCE_MATCHING_ALLOCATORS || is_same_v&lt;_Ty, <span class="keyword">typename</span> _Alloc::value_type&gt;,</span><br><span class="line">        _MISMATCHED_ALLOCATOR_MESSAGE(<span class="string">&quot;vector&lt;T, Allocator&gt;&quot;</span>, <span class="string">&quot;T&quot;</span>));</span><br><span class="line">    <span class="built_in">static_assert</span>(is_object_v&lt;_Ty&gt;, <span class="string">&quot;The C++ Standard forbids containers of non-object types &quot;</span></span><br><span class="line">                                    <span class="string">&quot;because of [container.requirements].&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">using</span> value_type      = _Ty;</span><br><span class="line">    <span class="keyword">using</span> allocator_type  = _Alloc;</span><br><span class="line">    <span class="keyword">using</span> pointer         = <span class="keyword">typename</span> _Alty_traits::pointer;</span><br><span class="line">    <span class="keyword">using</span> const_pointer   = <span class="keyword">typename</span> _Alty_traits::const_pointer;</span><br><span class="line">    <span class="keyword">using</span> reference       = _Ty&amp;;</span><br><span class="line">    <span class="keyword">using</span> const_reference = <span class="type">const</span> _Ty&amp;;</span><br><span class="line">    <span class="keyword">using</span> size_type       = <span class="keyword">typename</span> _Alty_traits::size_type;</span><br><span class="line">    <span class="keyword">using</span> difference_type = <span class="keyword">typename</span> _Alty_traits::difference_type;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ... (이하 생략)</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 관련된 변수인 _Scary_val</span></span><br><span class="line">    <span class="keyword">using</span> _Scary_val = _Vector_val&lt;<span class="type">conditional_t</span>&lt;_Is_simple_alloc_v&lt;_Alty&gt;, _Simple_types&lt;_Ty&gt;,</span><br><span class="line">        _Vec_iter_types&lt;_Ty, size_type, difference_type, pointer, const_pointer&gt;&gt;&gt;;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    _Compressed_pair&lt;_Alty, _Scary_val&gt; _Mypair;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>we can focus on the <strong>_Scary_val</strong> here.</p>
+<h3 id="2-Vector-val-structure-variable-type-of-Scary-val"><a href="#2-Vector-val-structure-variable-type-of-Scary-val" class="headerlink" title="2. _Vector_val structure (variable type of _Scary_val)"></a>2. _Vector_val structure (variable type of _Scary_val)</h3><p><em>eventually, <strong>_Scary_val</strong> will end up having a type of <strong>_Vector_val</strong> after some blah, blah, blah <sup><a href="#fn_2" id="reffn_2">2</a></sup>. below is the declaration of <em>*_Vector_val</em></em>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Val_types</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_Vector_val</span> : <span class="keyword">public</span> _Container_base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> value_type      = <span class="keyword">typename</span> _Val_types::value_type;</span><br><span class="line">    <span class="keyword">using</span> size_type       = <span class="keyword">typename</span> _Val_types::size_type;</span><br><span class="line">    <span class="keyword">using</span> difference_type = <span class="keyword">typename</span> _Val_types::difference_type;</span><br><span class="line">    <span class="keyword">using</span> pointer         = <span class="keyword">typename</span> _Val_types::pointer;</span><br><span class="line">    <span class="keyword">using</span> const_pointer   = <span class="keyword">typename</span> _Val_types::const_pointer;</span><br><span class="line">    <span class="keyword">using</span> reference       = value_type&amp;;</span><br><span class="line">    <span class="keyword">using</span> const_reference = <span class="type">const</span> value_type&amp;;</span><br><span class="line"></span><br><span class="line">    _CONSTEXPR20 _Vector_val() <span class="keyword">noexcept</span> : _Myfirst(), _Mylast(), _Myend() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    _CONSTEXPR20 _Vector_val(pointer _First, pointer _Last, pointer _End) <span class="keyword">noexcept</span></span><br><span class="line">        : _Myfirst(_First), _Mylast(_Last), _Myend(_End) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... (기타 멤버 함수들)</span></span><br><span class="line"></span><br><span class="line">    pointer _Myfirst; <span class="comment">// pointer to beginning of array</span></span><br><span class="line">    pointer _Mylast;  <span class="comment">// pointer to current end of sequence</span></span><br><span class="line">    pointer _Myend;   <span class="comment">// pointer to end of array</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>The important thing here is that the pointers <strong>_Myfirst, _Mylast, _Myend</strong> exist.</p>
+</blockquote>
+</blockquote>
+<h3 id="3-Implementing-the-main-functions"><a href="#3-Implementing-the-main-functions" class="headerlink" title="3. Implementing the main functions"></a>3. Implementing the main functions</h3><p>now that we know we’re actually using 3 pointers, let’s make sure our functions actually work through them.</p>
+<ul>
+<li><p>size() function</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD _CONSTEXPR20 size_type <span class="title">size</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Mylast - _My_data._Myfirst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>capacity() function</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function">_NODISCARD _CONSTEXPR20 size_type <span class="title">capacity</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Myend - _My_data._Myfirst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>empty() function</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD_EMPTY_MEMBER _CONSTEXPR20 <span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> _My_data._Myfirst == _My_data._Mylast;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>reserve() function</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">reserve</span><span class="params">(_CRT_GUARDOVERFLOW size_type _Newcapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// increase capacity to _Newcapacity (without geometric growth), provide strong guarantee</span></span><br><span class="line">    <span class="keyword">if</span> (_Newcapacity &gt; <span class="built_in">capacity</span>()) &#123; <span class="comment">// something to do (reserve() never shrinks)</span></span><br><span class="line">        <span class="keyword">if</span> (_Newcapacity &gt; <span class="built_in">max_size</span>()) &#123;</span><br><span class="line">            _Xlength();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _Reallocate&lt;_Reallocation_policy::_At_least&gt;(_Newcapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resise() function</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">resize</span><span class="params">(_CRT_GUARDOVERFLOW <span class="type">const</span> size_type _Newsize)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// trim or append value-initialized elements, provide strong guarantee</span></span><br><span class="line">    _Resize(_Newsize, _Value_init_tag&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">resize</span><span class="params">(_CRT_GUARDOVERFLOW <span class="type">const</span> size_type _Newsize, <span class="type">const</span> _Ty&amp; _Val)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// trim or append copies of _Val, provide strong guarantee</span></span><br><span class="line">    _Resize(_Newsize, _Val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Ty2</span>&gt;</span><br><span class="line">_CONSTEXPR20 <span class="type">void</span> _Resize(<span class="type">const</span> size_type _Newsize, <span class="type">const</span> _Ty2&amp; _Val) &#123;</span><br><span class="line">    <span class="comment">// trim or append elements, provide strong guarantee</span></span><br><span class="line">    <span class="keyword">auto</span>&amp; _Al           = _Getal();</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data      = _Mypair._Myval2;</span><br><span class="line">    pointer&amp; _Myfirst   = _My_data._Myfirst;</span><br><span class="line">    pointer&amp; _Mylast    = _My_data._Mylast;</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _Oldsize = <span class="built_in">static_cast</span>&lt;size_type&gt;(_Mylast - _Myfirst);</span><br><span class="line">    <span class="keyword">if</span> (_Newsize &lt; _Oldsize) &#123; <span class="comment">// trim</span></span><br><span class="line">        <span class="type">const</span> pointer _Newlast = _Myfirst + _Newsize;</span><br><span class="line">        _Orphan_range(_Newlast, _Mylast);</span><br><span class="line">        _Destroy_range(_Newlast, _Mylast, _Al);</span><br><span class="line">        _ASAN_VECTOR_MODIFY(<span class="built_in">static_cast</span>&lt;difference_type&gt;(_Newsize - _Oldsize));</span><br><span class="line">        _Mylast = _Newlast;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_Newsize &gt; _Oldsize) &#123; <span class="comment">// append</span></span><br><span class="line">        <span class="type">const</span> <span class="keyword">auto</span> _Oldcapacity = <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Myend - _Myfirst);</span><br><span class="line">        <span class="keyword">if</span> (_Newsize &gt; _Oldcapacity) &#123; <span class="comment">// reallocate</span></span><br><span class="line">            _Resize_reallocate(_Newsize, _Val);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _ASAN_VECTOR_EXTEND_GUARD(_Newsize);</span><br><span class="line">        <span class="type">const</span> pointer _Oldlast = _Mylast;</span><br><span class="line">        <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(is_same_v&lt;_Ty2, _Ty&gt;)</span> </span>&#123;</span><br><span class="line">            _Mylast = _Uninitialized_fill_n(_Oldlast, _Newsize - _Oldsize, _Val, _Al);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            _STL_INTERNAL_STATIC_ASSERT(is_same_v&lt;_Ty2, _Value_init_tag&gt;);</span><br><span class="line">            _Mylast = _Uninitialized_value_construct_n(_Oldlast, _Newsize - _Oldsize, _Al);</span><br><span class="line">        &#125;</span><br><span class="line">        _ASAN_VECTOR_RELEASE_GUARD;</span><br><span class="line">        _Orphan_range(_Oldlast, _Oldlast);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if _Newsize == _Oldsize, do nothing; avoid invalidating iterators</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>For size() and capacity(), you can see that we are calculating through last and end based on first.<br>empty() checks through last and first</p>
+<blockquote>
+<p>In particular, <strong>reserve() only does a reallocation</strong><br>and <strong>resize() works up to capacity based on the size of the element</strong>.</p>
+<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1><blockquote id="fn_1">
+<sup>1</sup>. <a href="/en/Dynamic-Programming-Dynamic-Programming">Dynamic Programming Dynamic Programming</a> approach]]<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2">
+<sup>2</sup>. Source: SVG created by Claude<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_3">
+<sup>3</sup>. template metaprogramming<a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
+</blockquote>
+</blockquote>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/std/" rel="tag"># std</a>
+              <a href="/tags/vector/" rel="tag"># vector</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>English</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="" aria-label="Select language">
+      
+        <option value="ko" data-href="/20250508/reserve-vs-resize-in-vector-class-c/" selected="">
+          한국어
+        </option>
+      
+        <option value="en" data-href="/en/20250508/reserve-vs-resize-in-vector-class-c/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ChoongGhee</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

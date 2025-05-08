@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"choongghee.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="std컨테이너의 vector class의 내부 멤버 함수 reserve와 resize에 대한 내용입니다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vector class의 reserve() vs resize() (C++)">
+<meta property="og:url" content="https://choongghee.github.io/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/index.html">
+<meta property="og:site_name" content="ChoongGhee">
+<meta property="og:description" content="std컨테이너의 vector class의 내부 멤버 함수 reserve와 resize에 대한 내용입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://choongghee.github.io/images/vector-memory-svg-reorganized.svg">
+<meta property="article:published_time" content="2025-05-08T12:51:30.139Z">
+<meta property="article:modified_time" content="2025-05-08T12:55:37.015Z">
+<meta property="article:author" content="ChoongGhee">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="std">
+<meta property="article:tag" content="vector">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://choongghee.github.io/images/vector-memory-svg-reorganized.svg">
+
+
+<link rel="canonical" href="https://choongghee.github.io/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ko","comments":true,"permalink":"https://choongghee.github.io/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/","path":"20250508/vector class의 reserve() vs resize() (C++)/","title":"vector class의 reserve() vs resize() (C++)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vector class의 reserve() vs resize() (C++) | ChoongGhee</title>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  <div class="category-posts-list">
+    <div class="category-header">
+      <span class="category-name">C/C++</span>
+      <span class="posts-count">6개의 글</span>
+      <a href="/categories/C-C/" class="view-all">목록보기</a>
+    </div>
+    
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th class="post-title">글 제목</th>
+          <th class="post-date">작성일</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250508/reserve-vs-resize-in-vector-class-c/">Reserve() Vs Resize() in Vector Class (C++)</a>
+            </td>
+            <td class="post-date">2025. 5. 08.</td>
+          </tr>
+        
+          <tr class="current-post">
+            <td class="post-title">
+              <a href="/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/">vector class의 reserve() vs resize() (C++)</a>
+            </td>
+            <td class="post-date">2025. 5. 08.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/">Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/">같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs</a>
+            </td>
+            <td class="post-date">2025. 4. 19.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/leetcode-189-rotate-array-analyze-the-rotate-function-c/">Analyze the Rotate Function (C++) - Leetcode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+          <tr >
+            <td class="post-title">
+              <a href="/20250418/LeetCode%20189.%20Rotate%20Array%20-%20rotate%20%ED%95%A8%EC%88%98%20%EB%B6%84%EC%84%9D%20(C++)/">rotate 함수 분석 (C++) - LeetCode 189. Rotate Array</a>
+            </td>
+            <td class="post-date">2025. 4. 18.</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ChoongGhee</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="검색" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>홈</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>정보</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>카테고리</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>아카이브</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>검색
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          목차
+        </li>
+        <li class="sidebar-nav-overview">
+          흝어보기
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B0%9C%EC%9A%94"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B0%9C%EB%8B%A8"><span class="nav-number">1.1.</span> <span class="nav-text">발단</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reserve-vs-resize-%EC%9D%98-%EC%B0%A8%EC%9D%B4"><span class="nav-number">2.</span> <span class="nav-text">reserve() vs resize()의 차이</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector%EC%9D%98-%EB%B0%B0%EC%97%B4-%EA%B4%80%EB%A6%AC-%EA%B5%AC%EC%A1%B0-%EC%9A%94%EC%95%BD"><span class="nav-number">2.1.</span> <span class="nav-text">vector의 배열 관리 구조 요약</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%8B%A4%EC%A0%9C%EB%A1%9C-%EA%B7%B8%EB%9F%AC%ED%95%9C%EA%B0%80"><span class="nav-number">2.2.</span> <span class="nav-text">실제로 그러한가?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vector-class-%EA%B8%B0%EB%B3%B8-%EC%84%A0%EC%96%B8"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. vector class 기본 선언</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Vector-val-%EA%B5%AC%EC%A1%B0-Scary-val%EC%9D%98-%EB%B3%80%EC%88%98-%ED%83%80%EC%9E%85"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. _Vector_val 구조(_Scary_val의 변수 타입)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%EC%A3%BC%EC%9A%94-%ED%95%A8%EC%88%98-%EA%B5%AC%ED%98%84"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 주요 함수 구현</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B0%81%EC%A3%BC"><span class="nav-number">3.</span> <span class="nav-text">각주</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ChoongGhee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">포스트</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">카테고리</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">태그</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/choongghee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;choongghee" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tititito44@gmail.com" title="E-Mail → mailto:tititito44@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-bookmark fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250508/reserve-vs-resize-in-vector-class-c/" rel="bookmark">
+        <time class="popular-posts-time">2025-05-08</time>
+        <br>
+      Reserve() Vs Resize() in Vector Class (C++)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/%EA%B0%99%EC%9D%80%20%ED%81%AC%EA%B8%B0%EC%9D%98%20heap%20%EB%A9%94%EB%AA%A8%EB%A6%AC(%EB%8F%99%EC%A0%81%ED%95%A0%EB%8B%B9)%20vs%20stack%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20(%EC%A7%80%EC%97%AD%20%EB%B3%80%EC%88%98)%20%EB%B9%84%EA%B5%90%20-%20LeetCode%2070.%20Climbing%20Stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      같은 크기의 heap 메모리(동적할당) vs stack 메모리 (지역 변수) 비교 - LeetCode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250419/same-size-heap-memory-dynamic-allocation-vs-stack-memory-local-variables-leetcode-70-climbing-stairs/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-19</time>
+        <br>
+      Same Size Heap Memory (Dynamic Allocation) Vs Stack Memory (Local Variables) - Leetcode 70. Climbing Stairs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250424/LeetCode%202145.%20Count%20The%20Hidden%20Sequences%20%ED%92%80%EC%9D%B4%20-%20%EB%88%84%EC%A0%81%ED%95%A9%20%EC%95%8C%EA%B3%A0%EB%A6%AC/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-24</time>
+        <br>
+      LeetCode 2145. Count The Hidden Sequences 풀이 - 누적합 알고리듬
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/20250424/leetcode-2145-count-the-hidden-sequences-solved-cumulative-sum-algorithm/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-24</time>
+        <br>
+      Leetcode 2145. Count the Hidden Sequences Solved - Prefix Sum Algorithm
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ko">
+    <link itemprop="mainEntityOfPage" href="https://choongghee.github.io/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ChoongGhee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vector class의 reserve() vs resize() (C++) | ChoongGhee">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vector class의 reserve() vs resize() (C++)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">작성일</span>
+      
+
+      <time title="Post created: 2025-05-08 21:51:30 / Updated at: 21:55:37" itemprop="dateCreated datePublished" datetime="2025-05-08T21:51:30+09:00">2025-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h1><p>해당 LeetCode문제(<a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-the-hidden-sequences/">LeetCode_2145</a>)에서 주어진 <code>differences</code>배열의 사이즈에 맞는 1차원 vector 배열(가칭 arr)을 생성하고자 했습니다.<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
+<h2 id="발단"><a href="#발단" class="headerlink" title="발단"></a>발단</h2><p>vector arr은 <strong>주어진<code>differences</code>의 길이로 정해지기 때문에 예상된 메모리 공간을 먼저 선언하는 작업을 했습니다, 즉, <code>reserve()</code> 멤버 함수를 사용</strong>해 메모리 공간을 확보하고자 했습니다.</p>
+<p>그러나 LeetCode 실행결과 오류가 생겼습니다.</p>
+<h1 id="reserve-vs-resize-의-차이"><a href="#reserve-vs-resize-의-차이" class="headerlink" title="reserve() vs resize()의 차이"></a>reserve() vs resize()의 차이</h1><blockquote>
+<p>제가 간과한 점은 <strong>“vector의 capacity와 size의 차이가 있다”</strong> 이었습니다. </p>
+<p>하나씩 풀어보면,  capacity는 <em>해당 자료구조가 감당할 수 있는 최대 크기</em>이고<br>size는 해당 <em>자료구조의 현재 원소의 갯수</em> 입니다.</p>
+</blockquote>
+<p> 글보단 아래 그림으로 해당 두 개념을 설명해보겠습니다. </p>
+<h2 id="vector의-배열-관리-구조-요약"><a href="#vector의-배열-관리-구조-요약" class="headerlink" title="vector의 배열 관리 구조 요약"></a>vector의 배열 관리 구조 요약</h2><p>vector는 내부 배열 관리 핵심은 <strong>세가지 포인터의 상호작용</strong>으로 이루어져 있습니다.</p>
+<blockquote>
+<p>배열의 기준 : first<br>현재 할당된 원소의 마지막 : last<br>자료구조 메모리의 마지막 : end</p>
+</blockquote>
+<p><img src="/images/vector-memory-svg-reorganized.svg" alt="vector-memory-svg-reorganized.svg">std::vector내부 배열 관리 구조<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
+<blockquote>
+<p>요약하면, resize()는 <strong>_Mylast 포인터</strong>를 증가하도록 하는 함수이며, reserve()는 <strong>_Myend 포인터</strong>를 증가하도록 하는 함수입니다.</p>
+<p>이때<em>last는 end보다 작은 주소를 갖도록 해야되며, 다른 상황이 생기면 조정합니다</em></p>
+<h2 id="실제로-그러한가"><a href="#실제로-그러한가" class="headerlink" title="실제로 그러한가?"></a>실제로 그러한가?</h2><p>이 부분은 추상화된 위 요약이 구현됐는지 확인하기 위한 과정입니다. (근거를 찾는 과정)</p>
+<p>아래는 Microsoft Visual C++(MSVC) 컴파일러의 C++17/C++20 표준 라이브러리 구현에서 발췌한 코드이며, 이 코드는 Visual Studio 2019 이상 버전에서 사용되는 STL(Standard Template Library)의 vector 구현을 보여줍니다.</p>
+<p>또한 현재 저의 수준으론 C++의 ‘템플릿 메타 프로그래밍’을 이해하기 어려워, 관련 타입 변수들의 연결에 설명이 부족합니다. 추후에 ‘템플릿 메타 프로그래밍’에 대해 논하면 좋을 것 같습니다.</p>
+</blockquote>
+<h3 id="1-vector-class-기본-선언"><a href="#1-vector-class-기본-선언" class="headerlink" title="1. vector class 기본 선언"></a>1. vector class 기본 선언</h3><p>먼저 <code>std::vector</code> 클래스의 기본 선언부입니다:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">_EXPORT_STD <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Ty</span>, <span class="keyword">class</span> <span class="title class_">_Alloc</span> = allocator&lt;_Ty&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> vector &#123; <span class="comment">// varying size array of values</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> _Vb_val;</span><br><span class="line">    <span class="keyword">friend</span> _Tidy_guard&lt;vector&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">using</span> _Alty        = _Rebind_alloc_t&lt;_Alloc, _Ty&gt;;</span><br><span class="line">    <span class="keyword">using</span> _Alty_traits = allocator_traits&lt;_Alty&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">static_assert</span>(!_ENFORCE_MATCHING_ALLOCATORS || is_same_v&lt;_Ty, <span class="keyword">typename</span> _Alloc::value_type&gt;,</span><br><span class="line">        _MISMATCHED_ALLOCATOR_MESSAGE(<span class="string">&quot;vector&lt;T, Allocator&gt;&quot;</span>, <span class="string">&quot;T&quot;</span>));</span><br><span class="line">    <span class="built_in">static_assert</span>(is_object_v&lt;_Ty&gt;, <span class="string">&quot;The C++ Standard forbids containers of non-object types &quot;</span></span><br><span class="line">                                    <span class="string">&quot;because of [container.requirements].&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">using</span> value_type      = _Ty;</span><br><span class="line">    <span class="keyword">using</span> allocator_type  = _Alloc;</span><br><span class="line">    <span class="keyword">using</span> pointer         = <span class="keyword">typename</span> _Alty_traits::pointer;</span><br><span class="line">    <span class="keyword">using</span> const_pointer   = <span class="keyword">typename</span> _Alty_traits::const_pointer;</span><br><span class="line">    <span class="keyword">using</span> reference       = _Ty&amp;;</span><br><span class="line">    <span class="keyword">using</span> const_reference = <span class="type">const</span> _Ty&amp;;</span><br><span class="line">    <span class="keyword">using</span> size_type       = <span class="keyword">typename</span> _Alty_traits::size_type;</span><br><span class="line">    <span class="keyword">using</span> difference_type = <span class="keyword">typename</span> _Alty_traits::difference_type;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ... (이하 생략)</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 관련된 변수인 _Scary_val</span></span><br><span class="line">    <span class="keyword">using</span> _Scary_val = _Vector_val&lt;<span class="type">conditional_t</span>&lt;_Is_simple_alloc_v&lt;_Alty&gt;, _Simple_types&lt;_Ty&gt;,</span><br><span class="line">        _Vec_iter_types&lt;_Ty, size_type, difference_type, pointer, const_pointer&gt;&gt;&gt;;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    _Compressed_pair&lt;_Alty, _Scary_val&gt; _Mypair;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>여기서  <strong>_Scary_val</strong>에  집중해주시면 되겠습니다.</p>
+<h3 id="2-Vector-val-구조-Scary-val의-변수-타입"><a href="#2-Vector-val-구조-Scary-val의-변수-타입" class="headerlink" title="2. _Vector_val 구조(_Scary_val의 변수 타입)"></a>2. _Vector_val 구조(_Scary_val의 변수 타입)</h3><p><strong>_Scary_val</strong>은 결국 이런 저런 과정<sup><a href="#fn_2" id="reffn_2">2</a></sup>을 거쳐 <strong>_Vector_val</strong>타입을 갖게됩니다. 아래는 <strong>_Vector_val</strong>의 선언부입니다:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Val_types</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_Vector_val</span> : <span class="keyword">public</span> _Container_base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> value_type      = <span class="keyword">typename</span> _Val_types::value_type;</span><br><span class="line">    <span class="keyword">using</span> size_type       = <span class="keyword">typename</span> _Val_types::size_type;</span><br><span class="line">    <span class="keyword">using</span> difference_type = <span class="keyword">typename</span> _Val_types::difference_type;</span><br><span class="line">    <span class="keyword">using</span> pointer         = <span class="keyword">typename</span> _Val_types::pointer;</span><br><span class="line">    <span class="keyword">using</span> const_pointer   = <span class="keyword">typename</span> _Val_types::const_pointer;</span><br><span class="line">    <span class="keyword">using</span> reference       = value_type&amp;;</span><br><span class="line">    <span class="keyword">using</span> const_reference = <span class="type">const</span> value_type&amp;;</span><br><span class="line"></span><br><span class="line">    _CONSTEXPR20 _Vector_val() <span class="keyword">noexcept</span> : _Myfirst(), _Mylast(), _Myend() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    _CONSTEXPR20 _Vector_val(pointer _First, pointer _Last, pointer _End) <span class="keyword">noexcept</span></span><br><span class="line">        : _Myfirst(_First), _Mylast(_Last), _Myend(_End) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... (기타 멤버 함수들)</span></span><br><span class="line"></span><br><span class="line">    pointer _Myfirst; <span class="comment">// pointer to beginning of array</span></span><br><span class="line">    pointer _Mylast;  <span class="comment">// pointer to current end of sequence</span></span><br><span class="line">    pointer _Myend;   <span class="comment">// pointer to end of array</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>여기서 중요한건 <strong>_Myfirst, _Mylast, _Myend 포인터가 존재한다는 점</strong>입니다.</p>
+</blockquote>
+<h3 id="3-주요-함수-구현"><a href="#3-주요-함수-구현" class="headerlink" title="3. 주요 함수 구현"></a>3. 주요 함수 구현</h3><p>실제로 3포인터를 사용함을 알았으니, 실제로 함수들이 이것들을 통해 작동하는지 확인해보겠습니다.</p>
+<ul>
+<li><p>size()함수</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD _CONSTEXPR20 size_type <span class="title">size</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Mylast - _My_data._Myfirst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>capacity()함수</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function">_NODISCARD _CONSTEXPR20 size_type <span class="title">capacity</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Myend - _My_data._Myfirst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>empty()함수</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD_EMPTY_MEMBER _CONSTEXPR20 <span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> _My_data._Myfirst == _My_data._Mylast;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>reserve()함수</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">reserve</span><span class="params">(_CRT_GUARDOVERFLOW size_type _Newcapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// increase capacity to _Newcapacity (without geometric growth), provide strong guarantee</span></span><br><span class="line">    <span class="keyword">if</span> (_Newcapacity &gt; <span class="built_in">capacity</span>()) &#123; <span class="comment">// something to do (reserve() never shrinks)</span></span><br><span class="line">        <span class="keyword">if</span> (_Newcapacity &gt; <span class="built_in">max_size</span>()) &#123;</span><br><span class="line">            _Xlength();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _Reallocate&lt;_Reallocation_policy::_At_least&gt;(_Newcapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resise()함수</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">resize</span><span class="params">(_CRT_GUARDOVERFLOW <span class="type">const</span> size_type _Newsize)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// trim or append value-initialized elements, provide strong guarantee</span></span><br><span class="line">    _Resize(_Newsize, _Value_init_tag&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">_CONSTEXPR20 <span class="type">void</span> <span class="title">resize</span><span class="params">(_CRT_GUARDOVERFLOW <span class="type">const</span> size_type _Newsize, <span class="type">const</span> _Ty&amp; _Val)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// trim or append copies of _Val, provide strong guarantee</span></span><br><span class="line">    _Resize(_Newsize, _Val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Ty2</span>&gt;</span><br><span class="line">_CONSTEXPR20 <span class="type">void</span> _Resize(<span class="type">const</span> size_type _Newsize, <span class="type">const</span> _Ty2&amp; _Val) &#123;</span><br><span class="line">    <span class="comment">// trim or append elements, provide strong guarantee</span></span><br><span class="line">    <span class="keyword">auto</span>&amp; _Al           = _Getal();</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data      = _Mypair._Myval2;</span><br><span class="line">    pointer&amp; _Myfirst   = _My_data._Myfirst;</span><br><span class="line">    pointer&amp; _Mylast    = _My_data._Mylast;</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _Oldsize = <span class="built_in">static_cast</span>&lt;size_type&gt;(_Mylast - _Myfirst);</span><br><span class="line">    <span class="keyword">if</span> (_Newsize &lt; _Oldsize) &#123; <span class="comment">// trim</span></span><br><span class="line">        <span class="type">const</span> pointer _Newlast = _Myfirst + _Newsize;</span><br><span class="line">        _Orphan_range(_Newlast, _Mylast);</span><br><span class="line">        _Destroy_range(_Newlast, _Mylast, _Al);</span><br><span class="line">        _ASAN_VECTOR_MODIFY(<span class="built_in">static_cast</span>&lt;difference_type&gt;(_Newsize - _Oldsize));</span><br><span class="line">        _Mylast = _Newlast;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_Newsize &gt; _Oldsize) &#123; <span class="comment">// append</span></span><br><span class="line">        <span class="type">const</span> <span class="keyword">auto</span> _Oldcapacity = <span class="built_in">static_cast</span>&lt;size_type&gt;(_My_data._Myend - _Myfirst);</span><br><span class="line">        <span class="keyword">if</span> (_Newsize &gt; _Oldcapacity) &#123; <span class="comment">// reallocate</span></span><br><span class="line">            _Resize_reallocate(_Newsize, _Val);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _ASAN_VECTOR_EXTEND_GUARD(_Newsize);</span><br><span class="line">        <span class="type">const</span> pointer _Oldlast = _Mylast;</span><br><span class="line">        <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(is_same_v&lt;_Ty2, _Ty&gt;)</span> </span>&#123;</span><br><span class="line">            _Mylast = _Uninitialized_fill_n(_Oldlast, _Newsize - _Oldsize, _Val, _Al);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            _STL_INTERNAL_STATIC_ASSERT(is_same_v&lt;_Ty2, _Value_init_tag&gt;);</span><br><span class="line">            _Mylast = _Uninitialized_value_construct_n(_Oldlast, _Newsize - _Oldsize, _Al);</span><br><span class="line">        &#125;</span><br><span class="line">        _ASAN_VECTOR_RELEASE_GUARD;</span><br><span class="line">        _Orphan_range(_Oldlast, _Oldlast);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if _Newsize == _Oldsize, do nothing; avoid invalidating iterators</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>size(), capacity()의 경우 first를 기준으로 last, end를 통해 계산을 하는 모습을 볼 수 있습니다.<br>empty()는 last와 first를 통해 확인을 하고<br>특히 <strong>reserve()는 재할당만 수행한다는 점</strong><br>그리고 <strong>resize()는 원소의 크기에 따라 용량까지 작업하는 점을 확인</strong> 할 수 있습니다.</p>
+<h1 id="각주"><a href="#각주" class="headerlink" title="각주"></a>각주</h1><blockquote id="fn_1">
+<sup>1</sup>. <a href="/ko/동적-프로그래밍-Dynamic-Programming">동적 프로그래밍 Dynamic Programming</a> 접근법<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2">
+<sup>2</sup>. 출처 : Claude 생성 SVG<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_3">
+<sup>3</sup>. 템플릿 메타 프로그래밍<a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
+</blockquote>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/std/" rel="tag"># std</a>
+              <a href="/tags/vector/" rel="tag"># vector</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>한국어</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="" aria-label="Select language">
+      
+        <option value="ko" data-href="/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/" selected="">
+          한국어
+        </option>
+      
+        <option value="en" data-href="/en/20250508/vector%20class%EC%9D%98%20reserve()%20vs%20resize()%20(C++)/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ChoongGhee</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
